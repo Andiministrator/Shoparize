@@ -90,22 +90,22 @@ Publish the container version ...
 ## Contact and more Information
 
 Feel free to use or change the code. If you have suggestions for improvement, please write to me.
-**Licence:** Apache 2.0
-**Repository:** [Github aGTM Repository](https://github.com/Andiministrator/Shoparize)
+- **Licence:** Apache 2.0
+- **Repository:** [Github aGTM Repository](https://github.com/Andiministrator/Shoparize)
 
 ### Author and Contact
 
 Please contact me if you found problems or have improvements:
 
 **Andi Petzoldt**
-☛ https://andiministrator.de
-✉ andi@petzoldt.net
-🧳 https://www.linkedin.com/in/andiministrator/
-🐘 https://mastodon.social/@andiministrator
-👥 https://friendica.opensocial.space/profile/andiministrator
-📷 https://pixelfed.de/Andiministrator
-🎧 https://open.audio/@Andiministrator/
-🎥 https://diode.zone/a/andiministrator/video-channels
+- ☛ https://andiministrator.de
+- ✉ andi@petzoldt.net
+- 🧳 https://www.linkedin.com/in/andiministrator/
+- 🐘 https://mastodon.social/@andiministrator
+- 👥 https://friendica.opensocial.space/profile/andiministrator
+- 📷 https://pixelfed.de/Andiministrator
+- 🎧 https://open.audio/@Andiministrator/
+- 🎥 https://diode.zone/a/andiministrator/video-channels
 
 ---
 

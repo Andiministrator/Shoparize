@@ -90,6 +90,7 @@ Publish the container version ...
 ## Contact and more Information
 
 Feel free to use or change the code. If you have suggestions for improvement, please write to me.
+
 - **Licence:** Apache 2.0
 - **Repository:** [Github aGTM Repository](https://github.com/Andiministrator/Shoparize)
 
@@ -98,6 +99,7 @@ Feel free to use or change the code. If you have suggestions for improvement, pl
 Please contact me if you found problems or have improvements:
 
 **Andi Petzoldt**
+
 - ☛ https://andiministrator.de
 - ✉ andi@petzoldt.net
 - 🧳 https://www.linkedin.com/in/andiministrator/

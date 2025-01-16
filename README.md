@@ -113,7 +113,10 @@ Please contact me if you found problems or have improvements:
 
 ## Changelog
 
-- Version 1.0, *15.01.2025*
+- Version 1.0, *16.01.2025*
   - Initial Version of aGTM
+
+- Version 1.0pre, *15.01.2025*
+  - Pre Version of aGTM
 
 ---

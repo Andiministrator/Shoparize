@@ -23,7 +23,7 @@ Go through the following steps to use the Template:
 
 ### (1) Import the Template
 
-Download the file "Shoparize.tpl" and navigate to your GTM Container.
+Download the file "template.tpl" and navigate to your GTM Container.
 
 Click on templates and the "New" Button:
 ![New Template](assets/shoparize-import-1.png)
@@ -113,10 +113,7 @@ Please contact me if you found problems or have improvements:
 
 ## Changelog
 
-- Version 1.0, *16.01.2025*
+- Version 1.0, *15.01.2025*
   - Initial Version of aGTM
-
-- Version 1.0pre, *15.01.2025*
-  - Pre Version of aGTM
 
 ---

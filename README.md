@@ -1,4 +1,4 @@
-# Shoparize - GTM Template
+# Shoparize - GTM Template (unofficial)
 
 ![Shoparize](assets/shoparize.png)
 
@@ -14,6 +14,7 @@
 ## What is it for? - General Information
 
 This is a Google Tag Manager Template to use the Shoparize (Tracking) API.
+**Please note:** This template is not officially provided or approved by Shoparize. It is a custom, unofficial template created by me because there is no official template (yet).
 
 ---
 

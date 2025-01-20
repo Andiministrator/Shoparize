@@ -1,5 +1,9 @@
 homepage: "https://github.com/Andiministrator/Shoparize"
 documentation: "https://github.com/Andiministrator/Shoparize/blob/main/README.md"
 versions:
+  # Latest version
+  - sha: c7af38ca08af730da2bcd02b5e62d8b8accab237
+    changeNotes: v1.0.1 Marked as unofficial Template.
+  # Older versions
   - sha: 4592dc95a471a493d0dc991015e3fb35fa159c05
-    changeNotes: Initial release.
+    changeNotes: v1.0: Initial release.

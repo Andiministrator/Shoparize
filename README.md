@@ -114,6 +114,9 @@ Please contact me if you found problems or have improvements:
 
 ## Changelog
 
+- Version 1.1, *13.03.2025*
+  - Code revision
+
 - Version 1.0.1, *20.01.2025*
   - GTM Template marked as unofficial
 

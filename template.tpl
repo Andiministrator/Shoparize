@@ -13,7 +13,7 @@ ___INFO___
   "id": "cvt_temp_public_id",
   "version": 1,
   "securityGroups": [],
-  "displayName": "Shoparize Website Tracking API (unofficial)",
+  "displayName": "Shoparize Website Tracking API",
   "categories": [
     "ADVERTISING",
     "AFFILIATE_MARKETING",
@@ -200,20 +200,6 @@ ___TEMPLATE_PARAMETERS___
         "type": "EQUALS"
       }
     ]
-  },
-  {
-    "type": "GROUP",
-    "name": "addtitional_settings",
-    "displayName": "Additional Settings",
-    "groupStyle": "ZIPPY_OPEN_ON_PARAM",
-    "subParams": [
-      {
-        "type": "CHECKBOX",
-        "name": "debug",
-        "checkboxText": "Activate Debug Messages",
-        "simpleValueType": true
-      }
-    ]
   }
 ]
 
@@ -222,39 +208,52 @@ ___SANDBOXED_JS_FOR_WEB_TEMPLATE___
 
 // Required Libraries
 const log = require('logToConsole');
-const inject = require('injectScript');
-//const setInWindow = require('setInWindow');
+const injectScript = require('injectScript');
 const callInWindow = require('callInWindow');
 const copyFromWindow = require('copyFromWindow');
 const setInWindow = require('setInWindow');
 const copyFromDataLayer = require('copyFromDataLayer');
+const queryPermission = require('queryPermission');
 const JSON = require('JSON');
 
 // Configuration
 const shoparize_url = 'https://partner-cdn.shoparize.com/js/shoparize.js';
-const debug = typeof data.debug=='boolean' ? data.debug : false;
 const partner_id = data.partner_id;
 const pagetype = data.pagetype;
 
-// Callback (Main) Function
-const onSuccess = function() {
+// Shoparize Tracking (Main) Function
+const trackShoparize = function() {
 
   // Get Shoparize API
   let srapi = callInWindow('SHOPARIZE_API');
-  if (debug) log('info', 'Shoparize Script for '+partner_id+' injected', srapi);
+  if (typeof srapi == 'undefined') {
+    log('error', 'Error by calling SHOPARIZE_API. Returns undefined (Type: '+typeof srapi+').');
+    data.gtmOnFailure();
+  }
+  //log('info', 'Shoparize Script for '+partner_id+' injected', typeof srapi);
 
   // Normal Pageview
   if (pagetype=='normal') {
     // Run Shoparize Init
-    srapi.init(partner_id);
-    if (debug) log('info', 'Shoparize Init sent');
+    if (typeof srapi == 'object' && typeof srapi.init == 'function') {
+      srapi.init(partner_id);
+    } else {
+      log('error', 'Error by calling SHOPARIZE_API.init');
+      data.gtmOnFailure();
+    }
+    //log('info', 'Shoparize Init for Pageview sent');
   }
 
   // Purchase Pageview
   if (pagetype=='purchase') {
     // Run Shoparize Init
-    srapi.init(partner_id);
-    if (debug) log('info', 'Shoparize Init sent');
+    if (typeof srapi == 'object' && typeof srapi.init == 'function') {
+      srapi.init(partner_id);
+    } else {
+      log('error', 'Error by calling SHOPARIZE_API.init');
+      data.gtmOnFailure();
+    }
+    //log('info', 'Shoparize Init for Purchase sent');
     // Get ECommerce DataLayer
     const ec_dl = data.ecomm_datalayer;
     let ec = null;
@@ -264,11 +263,11 @@ const onSuccess = function() {
       if (typeof ectmp=='object' && ectmp) {
         ec = JSON.parse(JSON.stringify(ectmp));
       } else {
-        if (debug) log('warn', 'Shoparize: ecommerce object not existing (or valid) as dataLayer.ecommerce: ', ectmp);
+        log('warn', 'Shoparize: ecommerce object not existing (or valid) as dataLayer.ecommerce: ', ectmp);
       }
       ec = copyFromDataLayer('ecommerce');
       if (typeof ec!='object' || !ec) {
-        if (debug) log('warn', 'Shoparize: ecommerce object not existing (or valid) in dataLayer! ECommerce Object: ', JSON.parse(JSON.stringify(ec)));
+        log('warn', 'Shoparize: ecommerce object not existing (or valid) in dataLayer! ECommerce Object: ', JSON.parse(JSON.stringify(ec)));
         ec = null;
       }
     }
@@ -281,7 +280,7 @@ const onSuccess = function() {
         if (typeof ectmp=='object' && ectmp && typeof ectmp.items=='object') {
           items = JSON.parse(JSON.stringify(ectmp.items));
         } else {
-          if (debug) log('warn', 'Shoparize: ecommerce.items object not existing (or valid) in dataLayer! ECommerce Object: ', JSON.parse(JSON.stringify(ectmp)));
+          log('warn', 'Shoparize: ecommerce.items object not existing (or valid) in dataLayer! ECommerce Object: ', JSON.parse(JSON.stringify(ectmp)));
         }
       }
       // Other DataLayer Items Object
@@ -290,7 +289,7 @@ const onSuccess = function() {
         if (typeof itemstmp=='object' && itemstmp) {
           items = JSON.parse(JSON.stringify(itemstmp));
         } else {
-          if (debug) log('warn', 'Shoparize: ecommerce.items object not existing (or valid) in dataLayer! ECommerce Object: ', JSON.parse(JSON.stringify(itemstmp)));
+          log('warn', 'Shoparize: ecommerce.items object not existing (or valid) in dataLayer! ECommerce Object: ', JSON.parse(JSON.stringify(itemstmp)));
         }
       }
       // Items Object from a GTM Variable
@@ -299,7 +298,7 @@ const onSuccess = function() {
         if (typeof itemstmp=='object' && itemstmp) {
           items = JSON.parse(JSON.stringify(itemstmp));
         } else {
-          if (debug) log('warn', 'Shoparize: ecommerce.items object not existing (or valid) in given GTM variables! Given Variable Content: ', itemstmp);
+          log('warn', 'Shoparize: ecommerce.items object not existing (or valid) in given GTM variables! Given Variable Content: ', itemstmp);
         }
       }
       ec = {
@@ -317,10 +316,10 @@ const onSuccess = function() {
       if (typeof ectmp=='object' && ectmp) {
         ec = JSON.parse(JSON.stringify(ectmp));
       } else {
-        if (debug) log('warn', 'Shoparize: ecommerce object not existing (or valid) in given GTM variables! Given Variable Content: ', ectmp);
+        log('warn', 'Shoparize: ecommerce object not existing (or valid) in given GTM variables! Given Variable Content: ', ectmp);
       }
     }
-    if (debug) log('info', 'Shoparize ECommerce Object imported', JSON.parse(JSON.stringify(ec)));
+    //log('info', 'Shoparize ECommerce Object imported', JSON.parse(JSON.stringify(ec)));
     // Get/Create Shoparize DataLayer
     let sdl = copyFromWindow('dataLayerShoparize');
     if (typeof sdl!='object' || typeof sdl.length!='number') {
@@ -334,25 +333,40 @@ const onSuccess = function() {
     };
     sdl.push(ec_obj);
     setInWindow('dataLayerShoparize', sdl, true);
-    if (debug) log('info', 'Shoparize ECommerce Object sent to Shoparize DataLayer', JSON.parse(JSON.stringify(sdl)));
     // Send Shoparize Conversion
-    srapi.conv(partner_id);
-    if (debug) log('info', 'Shoparize Purchae Conversion sent');
+    if (typeof srapi == 'object' && typeof srapi.conv == 'function') {
+      srapi.conv(partner_id);
+      log('info', 'Shoparize ECommerce Object sent to Shoparize', JSON.parse(JSON.stringify(sdl)));
+    } else {
+      log('error', 'Error by calling SHOPARIZE_API.conv');
+      data.gtmOnFailure();
+    }
+    //log('info', 'Shoparize Purchae Conversion sent');
   }
 
 };
 
 // Error Handling
 const onFailure = function() {
-  if (debug) log('error', 'Error by loading Shoparize Script');
+  log('error', 'Error by loading Shoparize Script');
+  data.gtmOnFailure();
+};
+
+// Success Handling
+const onSuccess = function() {
+  trackShoparize();
+  log('info', 'Shoparize Script for Partner Shop '+partner_id+' injected');
+  data.gtmOnSuccess();
 };
 
 // Inject Script
-inject(shoparize_url, onSuccess, onFailure/*, shoparize_url*/);
-if (debug) log('info', 'Shoparize Script required for Partner Shop '+partner_id);
-
-// Call data.gtmOnSuccess when the tag is finished.
-data.gtmOnSuccess();
+//log('info', 'Require Shoparize Script for Partner Shop '+partner_id+' ...');
+if (queryPermission('inject_script', shoparize_url)) {
+  injectScript(shoparize_url, onSuccess, onFailure);
+} else {
+  log('error','Shoparize Script incection: No permissions to inject');
+  data.gtmOnFailure();
+}
 
 
 ___WEB_PERMISSIONS___
@@ -369,7 +383,7 @@ ___WEB_PERMISSIONS___
           "key": "environments",
           "value": {
             "type": 1,
-            "string": "all"
+            "string": "debug"
           }
         }
       ]
@@ -531,20 +545,37 @@ ___WEB_PERMISSIONS___
 
 ___TESTS___
 
-scenarios: []
+scenarios:
+- name: Pageview Test
+  code: |-
+    const mockData = {
+      partner_id: "1234",
+      pagetype: "normal"
+    };
+
+    mock('injectScript', function(url, onSuccess, onFailure) {
+      onSuccess();
+    });
+
+    // Call runCode to run the template's code.
+    runCode(mockData);
+
+    // Verify that the tag finished successfully.
+    assertApi('gtmOnSuccess').wasCalled();
+setup: ''
 
 
 ___NOTES___
 
-# Shoparize GTM Template
+# Shoparize GTM Template (unofficial)
 
-- Version 1.0
+- Version 1.1
 - Autor: Andi Petzoldt <andi@petzoldt.net>
-- Last Update: 15.01.2025
+- Last Update: 12.03.2025
 
 ## Description
 
-This Template is for using the Shoparize (Tracking) API for an easier use of the Shoparize API.
+This (unofficial) GTM Template is for using the Shoparize (Tracking) API for an easier use of the Shoparize API.
 
 ## Repository
 

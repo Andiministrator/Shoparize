@@ -1,4 +1,4 @@
-# Shoparize - GTM Template (unofficial)
+# Shoparize Tracking - GTM Template
 
 ![Shoparize](assets/shoparize.png)
 
@@ -93,7 +93,7 @@ Publish the container version ...
 Feel free to use or change the code. If you have suggestions for improvement, please write to me.
 
 - **Licence:** Apache 2.0
-- **Repository:** [Github aGTM Repository](https://github.com/Andiministrator/Shoparize)
+- **Repository:** [Shoparize Tracking - Github Repository](https://github.com/Andiministrator/Shoparize)
 
 ### Author and Contact
 
@@ -108,11 +108,13 @@ Please contact me if you found problems or have improvements:
 - 👥 https://friendica.opensocial.space/profile/andiministrator
 - 📷 https://pixelfed.de/Andiministrator
 - 🎧 https://open.audio/@Andiministrator/
-- 🎥 https://diode.zone/a/andiministrator/video-channels
 
 ---
 
 ## Changelog
+
+- Version 1.2, *17.11.2025*
+  - Inject Script Pattern optimized
 
 - Version 1.1, *13.03.2025*
   - Code revision

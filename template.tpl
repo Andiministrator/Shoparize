@@ -407,7 +407,7 @@ ___WEB_PERMISSIONS___
             "listItem": [
               {
                 "type": 1,
-                "string": "https://*.shoparize.com/*"
+                "string": "https://partner-cdn.shoparize.com/js/shoparize.js"
               }
             ]
           }
@@ -569,9 +569,9 @@ ___NOTES___
 
 # Shoparize GTM Template (unofficial)
 
-- Version 1.1
+- Version 1.2
 - Autor: Andi Petzoldt <andi@petzoldt.net>
-- Last Update: 12.03.2025
+- Last Update: 17.11.2025
 
 ## Description
 
